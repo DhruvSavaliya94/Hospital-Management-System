@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="resources/css/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="resources/js/jquery-3.4.1.js"></script>
+        <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
+        <script src="resources/js/bootstrap.js"></script>
+        <title>Main</title>
+    </head>
+
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2 border">
+                    <div class="text-center">
+                        <a href="#"><img src="resources/images/hospital.png" alt="Logo"></a>
+                    </div>
+                    <div class="text-center py-3">
+                        <img width="25%" src="resources/images/user.png" alt="user_photo">
+                        <p class="m-0 p-0">User Name</p>
+                    </div>
+                    <button class="tablinks btn btn-block button-hover" onclick="typ(event, 'Dashboard')"
+                        id="defaultOpen">Dashboard</button>
+                    <button class="tablinks btn btn-block button-hover" onclick="typ(event, 'Doctors')">Doctors</button>
+                    <button class="tablinks btn btn-block button-hover" onclick="typ(event, 'Patient')">Patient</button>
+                    <button class="tablinks btn btn-block button-hover"
+                        onclick="typ(event, 'Appotiment')">Appotiment</button>
+                    <button class="tablinks btn btn-block button-hover" onclick="typ(event, 'Setting')">Setting</button>
+                </div>
+                <div class="col-md-10 border">
+                    <div class="row d-flex justify-content-end">
+                        <div class="col-md-2 text-center Logout-button-margin">
+                            <a class="btn btn-danger btn-block" href="Signup.html" role="button">Log out</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <!-- ############################ Dashboard page ############################-->
+                            <div id="Dashboard" class="tabcontent">
+                                <div class="row m-0 p-0">
+                                    <div class="col-md-4">
+                                        <div class="media border">
+                                            <img width="50%" src="resources/images/dashboard-graph-1.png"
+                                                alt="graph">
+                                            <div class="media-body">
+                                                <h1 class="mt-0 text-center">15</h1>
+                                                <h5 class="py-2 text-center">Appotiment</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="media border">
+                                            <img width="35%" src="resources/images/dashboard-graph-2.jpg"
+                                                alt="graph">
+                                            <div class="media-body">
+                                                <h1 class="mt-0 text-center">200</h1>
+                                                <h5 class="py-2 text-center">Patients</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="Doctors" class="tabcontent">
+                                <h3>Doctors</h3>
+                            </div>
+
+                            <div id="Patient" class="tabcontent">
+                                <h3>Patient</h3>
+                            </div>
+
+                            <div id="Appotiment" class="tabcontent">
+                                <h3>Appotiment</h3>
+                            </div>
+                            <div id="Setting" class="tabcontent">
+                                <h3>Setting</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <script>
+            function typ(evt, about) {
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(about).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+
+            // Get the element with id="defaultOpen" and click on it
+            document.getElementById("defaultOpen").click();
+        </script>
+
+    </body>
+
+</html>

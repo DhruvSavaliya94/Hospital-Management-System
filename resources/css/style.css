@@ -3,8 +3,24 @@
     padding: 0%;
 }
 
-/*############################## Sign-Up ##############################*/
+/*############################## Sign-Up Login-in ##############################*/
 
 .form-border{
     border: 1px solid black!important;
+}
+
+/*############################## Main ##############################*/
+
+.Logout-button-margin{
+    margin: 4% 3%;
+}
+
+.button-hover:hover{
+    background-color: #0066cc;
+    color: #ffff!important;
+}
+
+.button-hover.active{
+    background-color: #0066cc;
+    color: #ffff!important;
 }
