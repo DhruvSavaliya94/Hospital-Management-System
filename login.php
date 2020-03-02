@@ -19,12 +19,12 @@
                 <div class="row d-flex justify-content-center">
                     <div class="col-6 col-sm-6 col-md-4 form-border my-5">
                         <img class="d-block mx-auto py-3" width="35%" src="resources/images/user.png" alt="user_photo">
-                        <form>
+                        <form action="resources/api/auth.php" method="POST">
                             <div class="form-group pt-5">
-                                <input type="email" class="form-control" id="Email" placeholder="Email ID">
+                                <input type="email" class="form-control" id="Email" name="userid" placeholder="Email ID">
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" id="Password" placeholder="Password">
+                                <input type="password" class="form-control" id="Password" name="password" placeholder="Password">
                             </div>
                             <div class="form-group pt-5">
                                 <button type="submit" class="btn btn-primary btn-block">Login</button>

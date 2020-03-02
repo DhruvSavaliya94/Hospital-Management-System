@@ -1,5 +1,4 @@
 function isValidate() {
-    debugger
     var regEx1 = /^[9]\d{9}|[8]\d{9}$/;
     var email = document.getElementById("EmailID").value;
     var pass = document.getElementById("Password").value;

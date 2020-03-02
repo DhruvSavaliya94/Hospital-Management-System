@@ -414,7 +414,7 @@
                                 </div>
                             </div>
 
-                            <!-- ############################ Setting page ############################-->
+                            <!-- ############################ Data page ############################-->
 
                             <div id="Setting" class="tabcontent">
                                 <div class="row m-0 p-0">
@@ -471,7 +471,7 @@
                                 </div>
                             </div>
 
-                            <!-- ############################ Setting page finish ############################-->
+                            <!-- ############################ Data page finish ############################-->
 
                         </div>
                     </div>
@@ -482,11 +482,7 @@
         <!--For change all color which user want-->
         <script>
             function clch() {
-                //alert("TEst");
-                //alert(document.myform.favcolor.value);
                 var n = document.getElementById("favcolor").value;
-                // alert(n);
-                //alert(n);
                 var t = document.getElementById("a");
                 t.style.backgroundColor = n;
             }
