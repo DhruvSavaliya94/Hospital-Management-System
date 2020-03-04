@@ -28,7 +28,7 @@
                             </div>
                             <div class="form-group pt-5">
                                 <button type="submit" class="btn btn-primary btn-block">Login</button>
-                                <a class="btn btn-info btn-block" href="Signup.html" role="button">If you have no
+                                <a class="btn btn-info btn-block" href="Signup.php" role="button">If you have no
                                     account then Sign up</a>
                             </div>
                         </form>
