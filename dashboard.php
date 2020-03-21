@@ -135,13 +135,13 @@ if (!isset($_SESSION["userid"])) {
                                     <h4 class="py-2">Doctors Registrations</h4>
                                     <div class="row d-flex justify-content-center">
                                         <div class="col-md-10">
-                                            <form method="POST" action="">
+                                            <form method="POST" action="" onsubmit="return drValidation();">
                                                 <!--row is first name in form-->
                                                 <div class="form-group row">
                                                     <label for="firstname" class="col-sm-2 col-form-label font-weight-bold">First
                                                         Name</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control" id="firstname" placeholder="">
+                                                        <input type="text" class="form-control" id="firstname" name="drfname" placeholder="First Name" required>
                                                     </div>
                                                 </div>
                                                 <!--row is last name in form-->
@@ -149,7 +149,7 @@ if (!isset($_SESSION["userid"])) {
                                                     <label for="lastname" class="col-sm-2 col-form-label font-weight-bold">Last
                                                         Name</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control" id="lastname" placeholder="">
+                                                        <input type="text" class="form-control" id="lastname" name="drlname" placeholder="Last Name" required>
                                                     </div>
                                                 </div>
                                                 <!--row is mobile no in form-->
@@ -157,7 +157,7 @@ if (!isset($_SESSION["userid"])) {
                                                     <label for="mobileno" class="col-sm-2 col-form-label font-weight-bold">Mobile
                                                         No.</label>
                                                     <div class="col-sm-9">
-                                                        <input type="number" class="form-control" id="mobileno" placeholder="">
+                                                        <input type="number" class="form-control" id="mobileno" name="drmobile" placeholder="Contact" required>
                                                     </div>
                                                 </div>
                                                 <!--row is Gender in form-->
@@ -166,14 +166,13 @@ if (!isset($_SESSION["userid"])) {
                                                     <div class="col-sm-5">
                                                         <input type="radio" name="gender" value="male" checked> Male
                                                         <input type="radio" name="gender" value="female"> Female
-                                                        <input type="radio" name="gender" value="other"> Other
                                                     </div>
                                                 </div>
                                                 <!--row is DOB in form-->
                                                 <div class="form-group row">
                                                     <label for="dateofbirth" class="col-sm-2 col-form-label font-weight-bold">DOB</label>
                                                     <div class="col-sm-5">
-                                                        <input type="date" name="dateofbirth" id="dateofbirth">
+                                                        <input type="date" name="dateofbirth" id="dateofbirth" required>
                                                     </div>
                                                 </div>
                                                 <!--row is degree in form-->
@@ -227,7 +226,7 @@ if (!isset($_SESSION["userid"])) {
                                                     <label for="firstname" class="col-sm-2 col-form-label font-weight-bold">First
                                                         Name</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control" id="firstname" placeholder="">
+                                                        <input type="text" class="form-control" id="firstname" name="ptfname" placeholder="First Name">
                                                     </div>
                                                 </div>
                                                 <!--row is last name in form-->
@@ -235,7 +234,7 @@ if (!isset($_SESSION["userid"])) {
                                                     <label for="lastname" class="col-sm-2 col-form-label font-weight-bold">Last
                                                         Name</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control" id="lastname" placeholder="">
+                                                        <input type="text" class="form-control" id="lastname" name="ptlname" placeholder="Last Name">
                                                     </div>
                                                 </div>
                                                 <!--row is mobile no in form-->
@@ -243,7 +242,7 @@ if (!isset($_SESSION["userid"])) {
                                                     <label for="mobileno" class="col-sm-2 col-form-label font-weight-bold">Mobile
                                                         No.</label>
                                                     <div class="col-sm-9">
-                                                        <input type="number" class="form-control" id="mobileno" placeholder="">
+                                                        <input type="number" class="form-control" id="mobileno" name="ptmobile" placeholder="Contact">
                                                     </div>
                                                 </div>
                                                 <!--row is blood group in form-->
@@ -257,16 +256,20 @@ if (!isset($_SESSION["userid"])) {
                                                             <option>AB+</option>
                                                             <option>AB-</option>
                                                             <option>A+</option>
+                                                            <option>A-</option>
+                                                            <option>B+</option>
+                                                            <option>B-</option>
+
                                                         </select>
                                                     </div>
                                                     <label for="disease" class="col-sm-1 col-form-label font-weight-bold">Disease</label>
                                                     <div class="col-sm-3">
                                                         <select class="form-control" id="disease">
-                                                            <option>O+</option>
-                                                            <option>O-</option>
-                                                            <option>AB+</option>
-                                                            <option>AB-</option>
-                                                            <option>A+</option>
+                                                            <option>Diabetes</option>
+                                                            <option>Multiple Sclerosis</option>
+                                                            <option>Crohn's & Colitis</option>
+                                                            <option>Heart Disease</option>
+                                                            <option>Liver Disease</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -274,9 +277,8 @@ if (!isset($_SESSION["userid"])) {
                                                 <div class="form-group row">
                                                     <label for="gender" class="col-sm-2 col-form-label font-weight-bold">Gender</label>
                                                     <div class="col-sm-5">
-                                                        <input type="radio" name="gender" value="male"> Male
+                                                        <input type="radio" name="gender" value="male" checked> Male
                                                         <input type="radio" name="gender" value="female"> Female
-                                                        <input type="radio" name="gender" value="other"> Other
                                                     </div>
                                                 </div>
                                                 <!--row is DOB in form-->
