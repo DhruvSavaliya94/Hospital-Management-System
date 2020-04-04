@@ -2,9 +2,6 @@
 session_start();
 if (isset($_SESSION["userid"])) {
     unset($_SESSION["userid"]);
-    echo '<script type="text/JavaScript">  
-      alert("Login Successfully."); 
-      </script>';
     header('Location: ' . "http://localhost/Hospital-Mangement-System/Login.php");
 } else {
     header('Location: ' . "http://localhost/Hospital-Mangement-System/Login.php");

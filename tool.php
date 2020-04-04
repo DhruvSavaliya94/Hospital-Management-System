@@ -1,13 +1,15 @@
 <?php
-class Debug{
+class Debug
+{
     var $msg;
-    function __construct($txt) {
+    function __construct($txt)
+    {
         $this->msg = $txt;
-      }
-      function show(){
-          echo '<script type="text/JavaScript">  
-          alert("'.$this->msg.'"); 
+    }
+    function show()
+    {
+        echo '<script type="text/JavaScript">  
+          alert("' . $this->msg . '"); 
           </script>';
-      }
+    }
 }
-?>

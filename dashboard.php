@@ -3,6 +3,9 @@ session_start();
 if (!isset($_SESSION["userid"])) {
     header('Location: ' . "http://localhost/Hospital-Mangement-System/Login.php");
 }
+include_once("resources/config/database.php");
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,6 +20,7 @@ if (!isset($_SESSION["userid"])) {
     <link rel="stylesheet" type="text/css" href="resources/css/style.css">
     <script src="resources/js/bootstrap.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <link rel="icon" href="../Hospital-Mangement-System/resources/images/dashboard.png">
     <title>Dashboard</title>
 </head>
 
@@ -135,7 +139,7 @@ if (!isset($_SESSION["userid"])) {
                                     <h4 class="py-2">Doctors Registrations</h4>
                                     <div class="row d-flex justify-content-center">
                                         <div class="col-md-10">
-                                            <form method="POST" action="" onsubmit="return drValidation();">
+                                            <form method="POST" action="resources/api/adddr.php" onsubmit="return drValidation();">
                                                 <!--row is first name in form-->
                                                 <div class="form-group row">
                                                     <label for="firstname" class="col-sm-2 col-form-label font-weight-bold">First
@@ -180,19 +184,19 @@ if (!isset($_SESSION["userid"])) {
                                                     <label for="degree" class="col-sm-2 col-form-label font-weight-bold">Degree</label>
                                                     <div class="col-sm-9">
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" id="Checkbox1" value="option1" checked>
+                                                            <input class="form-check-input" type="checkbox" name="dgr[]" id="color" value="MS" checked>
                                                             <label class="form-check-label" for="Checkbox1">MS</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" id="Checkbox2" value="option2" checked>
+                                                            <input class="form-check-input" type="checkbox" name="dgr[]" id="color" value="MD" checked>
                                                             <label class="form-check-label" for="Checkbox2">MD</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" id="Checkbox3" value="option3">
+                                                            <input class="form-check-input" type="checkbox" name="dgr[]" id="color" value="BHMS">
                                                             <label class="form-check-label" for="Checkbox3">BHMS</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" id="Checkbox4" value="option4">
+                                                            <input class="form-check-input" type="checkbox" name="dgr[]" id="color" value="BDS">
                                                             <label class="form-check-label" for="Checkbox4">BDS</label>
                                                         </div>
                                                     </div>
@@ -220,7 +224,7 @@ if (!isset($_SESSION["userid"])) {
                                     <h4 class="py-2">Patients Registrations</h4>
                                     <div class="row d-flex justify-content-center">
                                         <div class="col-md-10">
-                                            <form method="POST" action="">
+                                            <form method="POST" action="resources/api/patientregi.php">
                                                 <!--row is first name in form-->
                                                 <div class="form-group row">
                                                     <label for="firstname" class="col-sm-2 col-form-label font-weight-bold">First
@@ -250,7 +254,7 @@ if (!isset($_SESSION["userid"])) {
                                                     <label for="bloodgroup" class="col-sm-2 col-form-label font-weight-bold">Blood
                                                         Group</label>
                                                     <div class="col-sm-3">
-                                                        <select class="form-control" id="bloodgroup">
+                                                        <select class="form-control" id="bloodgroup" name="bloodgroup">
                                                             <option>O+</option>
                                                             <option>O-</option>
                                                             <option>AB+</option>
@@ -259,12 +263,11 @@ if (!isset($_SESSION["userid"])) {
                                                             <option>A-</option>
                                                             <option>B+</option>
                                                             <option>B-</option>
-
                                                         </select>
                                                     </div>
                                                     <label for="disease" class="col-sm-1 col-form-label font-weight-bold">Disease</label>
                                                     <div class="col-sm-3">
-                                                        <select class="form-control" id="disease">
+                                                        <select class="form-control" id="disease" name="disease">
                                                             <option>Diabetes</option>
                                                             <option>Multiple Sclerosis</option>
                                                             <option>Crohn's & Colitis</option>
@@ -292,7 +295,7 @@ if (!isset($_SESSION["userid"])) {
                                                 <div class="form-group row">
                                                     <label for="address" class="col-sm-2 col-form-label font-weight-bold">Address</label>
                                                     <div class="col-sm-5">
-                                                        <textarea class="form-control" id="address" rows="3"></textarea>
+                                                        <textarea class="form-control" id="address" name="address" rows="3"></textarea>
                                                     </div>
                                                 </div>
                                                 <!--row is buttons in form-->
@@ -318,17 +321,21 @@ if (!isset($_SESSION["userid"])) {
                                     <h4 class="py-2">Book Appointment</h4>
                                     <div class="row d-flex justify-content-center">
                                         <div class="col-md-10">
-                                            <form method="POST" action="">
+                                            <form method="POST" action="resources/api/appoitmentregi.php">
                                                 <!--row is patient in form-->
                                                 <div class="form-group row">
                                                     <label for="patient" class="col-sm-2 col-form-label font-weight-bold">Patient</label>
                                                     <div class="col-sm-4">
-                                                        <select class="form-control" id="patient">
-                                                            <option>1</option>
-                                                            <option>2</option>
-                                                            <option>3</option>
-                                                            <option>4</option>
-                                                            <option>5</option>
+                                                        <select class="form-control" id="patient" name="patient">
+                                                            <?php
+                                                            $sql = "SELECT `id`, `fname`, `lname` FROM `patient`";
+                                                            $result = mysqli_query($conn, $sql);
+                                                            while ($row = $result->fetch_assoc()) {
+                                                                $uid = $row['id'];
+                                                                $fullname = $row['fname'] . " " . $row['lname'];
+                                                                echo '<option value=" ' . $uid . '"  >' . $uid . " " . $fullname . '</option>';
+                                                            }
+                                                            ?>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -336,12 +343,16 @@ if (!isset($_SESSION["userid"])) {
                                                 <div class="form-group row">
                                                     <label for="doctor" class="col-sm-2 col-form-label font-weight-bold">Doctor</label>
                                                     <div class="col-sm-4">
-                                                        <select class="form-control" id="doctor">
-                                                            <option>1</option>
-                                                            <option>2</option>
-                                                            <option>3</option>
-                                                            <option>4</option>
-                                                            <option>5</option>
+                                                        <select class="form-control" id="doctor" name="doctor">
+                                                            <?php
+                                                            $sql = "SELECT `id`, `fname`, `lname` FROM `doctor`";
+                                                            $result = mysqli_query($conn, $sql);
+                                                            while ($row = $result->fetch_assoc()) {
+                                                                $uid = $row['id'];
+                                                                $fullname = $row['fname'] . " " . $row['lname'];
+                                                                echo '<option value=" ' . $uid . '"  >' . $uid . " " . $fullname . '</option>';
+                                                            }
+                                                            ?>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -349,24 +360,24 @@ if (!isset($_SESSION["userid"])) {
                                                 <div class="form-group row">
                                                     <label for="date/time" class="col-sm-2 col-form-label font-weight-bold">Date/Time</label>
                                                     <div class="col-sm-3">
-                                                        <input type="date" name="date/time1" id="date/time1">
+                                                        <input type="date" name="datetime1" id="date/time1">
                                                     </div>
                                                     <div class="col-sm-3">
-                                                        <input type="date" name="date/time2" id="date/time2">
+                                                        <input type="date" name="datetime2" id="date/time2">
                                                     </div>
                                                 </div>
                                                 <!--row is discription in form-->
                                                 <div class="form-group row">
                                                     <label for="discription" class="col-sm-2 col-form-label font-weight-bold">Discription</label>
                                                     <div class="col-sm-5">
-                                                        <textarea class="form-control" id="discription" rows="3"></textarea>
+                                                        <textarea class="form-control" id="discription" name="discription" rows="3"></textarea>
                                                     </div>
                                                 </div>
                                                 <!--row is buttons in form-->
                                                 <div class="form-group row">
                                                     <div class="col-sm-6 d-flex justify-content-between">
-                                                        <a class="btn btn-primary px-4" href="#" role="button">Submit</a>
-                                                        <a class="btn btn-warning px-4" href="#" role="button">Clear</a>
+                                                        <input type="submit" class="btn btn-primary px-4" href="#" role="button">
+                                                        <input type="reset" class="btn btn-warning px-4" href="#" role="button">
                                                         <a class="btn btn-danger px-4" href="#" role="button">Cancel</a>
                                                     </div>
                                                 </div>
@@ -385,43 +396,109 @@ if (!isset($_SESSION["userid"])) {
                                     <h4 class="py-2">Data</h4>
                                     <div class="row d-flex justify-content-center">
                                         <div class="col-md-10">
-                                            <form method="POST" action="">
-                                                <!--row is sms alert in form-->
-                                                <div class="form-group row">
-                                                    <label for="smsalert" class="col-sm-2 col-form-label font-weight-bold">SMS
-                                                        Alert</label>
-                                                    <div class="col-sm-5 py-2">
-                                                        <input type="radio" name="smsalert" value="enable" checked>
-                                                        Enable
-                                                        <input type="radio" name="smsalert" value="disable"> Disable
-                                                    </div>
-                                                </div>
-                                                <!--row is email alert in form-->
-                                                <div class="form-group row">
-                                                    <label for="emailalert" class="col-sm-2 col-form-label font-weight-bold">Email
-                                                        Alert</label>
-                                                    <div class="col-sm-5 py-2">
-                                                        <input type="radio" name="emailalert" value="enable" checked> Enable
-                                                        <input type="radio" name="emailalert" value="disable">
-                                                        Disable
-                                                    </div>
-                                                </div>
-                                                <!--row is buttons in form-->
-                                                <div class="form-group row">
-                                                    <div class="col-sm-4 d-flex justify-content-between">
-                                                        <a class="btn btn-primary px-4" href="#" role="button">Save</a>
-                                                        <a class="btn btn-danger px-4" href="#" role="button">Cancel</a>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            <div class="form-group row">
-                                                <label class="col-sm-2 col-form-label font-weight-bold">Change Color</label>
-                                                <input class="my-2" type="color" id="favcolor" />
-                                                <a class="col-sm-3 btn btn-info px-4 mx-2" href="#" role="button" onclick="clch();">Click</a>
-                                            </div>
-                                            <div style="width: 200px; height: 200px; border: 1px solid black;">
-                                                <h3 id="a">This is a heading</h3>
-                                            </div>
+                                            <table class="table">
+                                                <thead class="black white-text">
+                                                    <tr>
+                                                        <th scope="col">ID</th>
+                                                        <th scope="col">First Name</th>
+                                                        <th scope="col">Last Name</th>
+                                                        <th scope="col">Contact</th>
+                                                        <th scope="col">Gender</th>
+                                                        <th scope="col">Date of birth</th>
+                                                        <th scope="col">Degree</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $result = mysqli_query($conn, "SELECT * FROM `doctor`");
+                                                    while ($row = mysqli_fetch_array($result)) {
+                                                        echo "<tr>";
+                                                        echo "<td>" . $row['id'] . "</td>";
+                                                        echo "<td>" . $row['fname'] . "</td>";
+                                                        echo "<td>" . $row['lname'] . "</td>";
+                                                        echo "<td>" . $row['contact'] . "</td>";
+                                                        echo "<td>" . $row['gender'] . "</td>";
+                                                        echo "<td>" . $row['dob'] . "</td>";
+                                                        echo "<td>" . $row['degree'] . "</td>";
+
+                                                        echo "</tr>";
+                                                    }
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                            <hr>
+                                            <table class="table">
+                                                <thead class="black white-text">
+                                                    <tr>
+                                                        <th scope="col">ID</th>
+                                                        <th scope="col">First Name</th>
+                                                        <th scope="col">Last Name</th>
+                                                        <th scope="col">Contact</th>
+                                                        <th scope="col">Blood Group</th>
+                                                        <th scope="col">Disease</th>
+                                                        <th scope="col">Gender</th>
+                                                        <th scope="col">Date of birth</th>
+                                                        <th scope="col">Address</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $result = mysqli_query($conn, "SELECT * FROM `patient`");
+                                                    while ($row = mysqli_fetch_array($result)) {
+                                                        echo "<tr>";
+                                                        echo "<td>" . $row['id'] . "</td>";
+                                                        echo "<td>" . $row['fname'] . "</td>";
+                                                        echo "<td>" . $row['lname'] . "</td>";
+                                                        echo "<td>" . $row['contact'] . "</td>";
+                                                        echo "<td>" . $row['bloodgp'] . "</td>";
+                                                        echo "<td>" . $row['disease'] . "</td>";
+                                                        echo "<td>" . $row['gender'] . "</td>";
+                                                        echo "<td>" . $row['dob'] . "</td>";
+                                                        echo "<td>" . $row['address'] . "</td>";
+
+                                                        echo "</tr>";
+                                                    }
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                            <hr>
+                                            <table class="table">
+                                                <thead class="black white-text">
+                                                    <tr>
+                                                        <th scope="col">ID</th>
+                                                        <th scope="col">First Name</th>
+                                                        <th scope="col">Last Name</th>
+                                                        <th scope="col">Contact</th>
+                                                        <th scope="col">Blood Group</th>
+                                                        <th scope="col">Disease</th>
+                                                        <th scope="col">Gender</th>
+                                                        <th scope="col">Date of birth</th>
+                                                        <th scope="col">Address</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $result = mysqli_query($conn, "SELECT * FROM `patient`");
+                                                    while ($row = mysqli_fetch_array($result)) {
+                                                        echo "<tr>";
+                                                        echo "<td>" . $row['id'] . "</td>";
+                                                        echo "<td>" . $row['fname'] . "</td>";
+                                                        echo "<td>" . $row['lname'] . "</td>";
+                                                        echo "<td>" . $row['contact'] . "</td>";
+                                                        echo "<td>" . $row['bloodgp'] . "</td>";
+                                                        echo "<td>" . $row['disease'] . "</td>";
+                                                        echo "<td>" . $row['gender'] . "</td>";
+                                                        echo "<td>" . $row['dob'] . "</td>";
+                                                        echo "<td>" . $row['address'] . "</td>";
+
+                                                        echo "</tr>";
+                                                    }
+                                                    ?>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>

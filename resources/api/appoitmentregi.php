@@ -4,20 +4,15 @@ include_once("../config/database.php");
 include_once("../../tool.php");
 $email = $password = $contact = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $_firstname = isset($_POST['drfname']) ? $_POST['drfname'] : '';
-    $_lastname = isset($_POST['drlname']) ? $_POST['drlname'] : '';
-    $_contact = isset($_POST['drmobile']) ? $_POST['drmobile'] : '';
-    $_gender = isset($_POST['gender']) ? $_POST['gender'] : '';
-    $_dob = isset($_POST['dateofbirth']) ? $_POST['dateofbirth'] : '';
-    $_qulifications = isset($_POST['dgr']) ? $_POST['dgr'] : '';
-    $_qulification = "";
-    foreach ($_qulifications as $dg) {
-        $_qulification = $_qulification . " " . $dg;
-    }
+    $patient_id = isset($_POST['patient']) ? $_POST['patient'] : '';
+    $doctor_id = isset($_POST['patient']) ? $_POST['patient'] : '';
+    $from = isset($_POST['datetime1']) ? $_POST['datetime1'] : '';
+    $to  = isset($_POST['datetime2']) ? $_POST['datetime2'] : '';
+    $discription  = isset($_POST['discription']) ? $_POST['discription'] : '';
 
 
-    $query = "INSERT INTO `doctor`(`fname`, `lname`, `contact`, `gender`, `dob`, `degree`) VALUES 
-	('" . $_firstname . "','" . $_lastname . "','" . $_contact . "','" . $_gender . "','" . $_dob . "','" . $_qulification . "')";
+    $query = "INSERT INTO `appointment`(`patient_id`, `doctor_id`, `fromDate`, `toDate`, `discription`) VALUES
+    (" . $patient_id . "," . $doctor_id . ",'" . $from . "','" . $to . "','" . $discription . "')";
     if (mysqli_query($conn, $query)) {
         header('Location: ' . "http://localhost/Hospital-Mangement-System/dashboard.php");
     } else {

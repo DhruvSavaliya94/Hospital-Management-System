@@ -4,20 +4,19 @@ include_once("../config/database.php");
 include_once("../../tool.php");
 $email = $password = $contact = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $_firstname = isset($_POST['drfname']) ? $_POST['drfname'] : '';
-    $_lastname = isset($_POST['drlname']) ? $_POST['drlname'] : '';
-    $_contact = isset($_POST['drmobile']) ? $_POST['drmobile'] : '';
+    $_firstname = isset($_POST['ptfname']) ? $_POST['ptfname'] : '';
+    $_lastname = isset($_POST['ptlname']) ? $_POST['ptlname'] : '';
+    $_contact = isset($_POST['ptmobile']) ? $_POST['ptmobile'] : '';
+    $_blood_grp  = isset($_POST['bloodgroup']) ? $_POST['bloodgroup'] : '';
+    $_disease  = isset($_POST['disease']) ? $_POST['disease'] : '';
     $_gender = isset($_POST['gender']) ? $_POST['gender'] : '';
     $_dob = isset($_POST['dateofbirth']) ? $_POST['dateofbirth'] : '';
-    $_qulifications = isset($_POST['dgr']) ? $_POST['dgr'] : '';
-    $_qulification = "";
-    foreach ($_qulifications as $dg) {
-        $_qulification = $_qulification . " " . $dg;
-    }
+    $_address = isset($_POST['address']) ? $_POST['address'] : '';
 
 
-    $query = "INSERT INTO `doctor`(`fname`, `lname`, `contact`, `gender`, `dob`, `degree`) VALUES 
-	('" . $_firstname . "','" . $_lastname . "','" . $_contact . "','" . $_gender . "','" . $_dob . "','" . $_qulification . "')";
+    $query = "INSERT INTO `patient`(`fname`, `lname`, `contact`, `bloodgp`, `disease`, `gender`, `dob`, `address`) VALUES
+    ('" . $_firstname . "','" . $_lastname . "','" . $_contact . "','" . $_blood_grp . "','" . $_disease . "','" . $_gender . "','" . $_dob . "','" . $_address . "')";
+    echo $query;
     if (mysqli_query($conn, $query)) {
         header('Location: ' . "http://localhost/Hospital-Mangement-System/dashboard.php");
     } else {
