@@ -19,6 +19,7 @@ include_once("resources/config/database.php");
     <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="resources/css/style.css">
     <script src="resources/js/bootstrap.js"></script>
+    <script src="resources/js/javascript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <link rel="icon" href="../Hospital-Mangement-System/resources/images/dashboard.png">
     <title>Dashboard</title>
@@ -50,6 +51,14 @@ include_once("resources/config/database.php");
                 <div class="row">
                     <div class="col">
                         <!-- ############################ Dashboard page ############################-->
+                        <?php
+                        $result = mysqli_query($conn, "SELECT
+                            (SELECT COUNT(*) FROM appointment) as table1Count, 
+                            (SELECT COUNT(*) FROM patient) as table2Count,
+                            (SELECT COUNT(*) FROM doctor) as table3Count");
+                        $row = mysqli_fetch_assoc($result);
+
+                        ?>
                         <div id="Dashboard" class="tabcontent">
                             <!--   First Row Of Chart  -->
                             <div class="row m-0 p-0">
@@ -57,7 +66,9 @@ include_once("resources/config/database.php");
                                     <div class="media border">
                                         <img width="50%" src="resources/images/dashboard-graph-1.png" alt="graph">
                                         <div class="media-body">
-                                            <h1 class="mt-0 text-center">15</h1>
+                                            <h1 class="mt-0 text-center"><?php
+                                                                            echo $row["table1Count"];
+                                                                            ?></h1>
                                             <h5 class="py-2 text-center">Appotiment</h5>
                                         </div>
                                     </div>
@@ -66,7 +77,9 @@ include_once("resources/config/database.php");
                                     <div class="media border">
                                         <img width="35%" src="resources/images/dashboard-graph-2.jpg" alt="graph">
                                         <div class="media-body">
-                                            <h1 class="mt-0 text-center">200</h1>
+                                            <h1 class="mt-0 text-center"><?php
+                                                                            echo $row["table2Count"];
+                                                                            ?></h1>
                                             <h5 class="py-2 text-center">Patients</h5>
                                         </div>
                                     </div>
@@ -75,7 +88,9 @@ include_once("resources/config/database.php");
                                     <div class="media border">
                                         <img class="py-2" width="30%" src="resources/images/doctor.png" alt="graph">
                                         <div class="media-body">
-                                            <h1 class="mt-0 text-center">100</h1>
+                                            <h1 class="mt-0 text-center"><?php
+                                                                            echo $row["table3Count"];
+                                                                            ?></h1>
                                             <h5 class="py-2 text-center">Doctors</h5>
                                         </div>
                                     </div>
@@ -89,7 +104,6 @@ include_once("resources/config/database.php");
                                     <canvas id="myChart"></canvas>
                                     <script>
                                         var ctx = document.getElementById('myChart');
-                                        debugger
                                         var myChart = new Chart(ctx, {
                                             type: 'bar',
                                             data: {
@@ -139,7 +153,7 @@ include_once("resources/config/database.php");
                                     <h4 class="py-2">Doctors Registrations</h4>
                                     <div class="row d-flex justify-content-center">
                                         <div class="col-md-10">
-                                            <form method="POST" action="resources/api/adddr.php" onsubmit="return drValidation();">
+                                            <form action="resources/api/adddr.php" method="POST" onSubmit="return drValidation();">
                                                 <!--row is first name in form-->
                                                 <div class="form-group row">
                                                     <label for="firstname" class="col-sm-2 col-form-label font-weight-bold">First
@@ -224,13 +238,13 @@ include_once("resources/config/database.php");
                                     <h4 class="py-2">Patients Registrations</h4>
                                     <div class="row d-flex justify-content-center">
                                         <div class="col-md-10">
-                                            <form method="POST" action="resources/api/patientregi.php">
+                                            <form method="POST" action="resources/api/patientregi.php" onSubmit="return ptValidation();">
                                                 <!--row is first name in form-->
                                                 <div class="form-group row">
                                                     <label for="firstname" class="col-sm-2 col-form-label font-weight-bold">First
                                                         Name</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control" id="firstname" name="ptfname" placeholder="First Name">
+                                                        <input type="text" class="form-control" id="firstname" name="ptfname" placeholder="First Name" required>
                                                     </div>
                                                 </div>
                                                 <!--row is last name in form-->
@@ -238,7 +252,7 @@ include_once("resources/config/database.php");
                                                     <label for="lastname" class="col-sm-2 col-form-label font-weight-bold">Last
                                                         Name</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control" id="lastname" name="ptlname" placeholder="Last Name">
+                                                        <input type="text" class="form-control" id="lastname" name="ptlname" placeholder="Last Name" required>
                                                     </div>
                                                 </div>
                                                 <!--row is mobile no in form-->
@@ -246,7 +260,7 @@ include_once("resources/config/database.php");
                                                     <label for="mobileno" class="col-sm-2 col-form-label font-weight-bold">Mobile
                                                         No.</label>
                                                     <div class="col-sm-9">
-                                                        <input type="number" class="form-control" id="mobileno" name="ptmobile" placeholder="Contact">
+                                                        <input type="number" class="form-control" id="ptmobileno" name="ptmobile" placeholder="Contact" required>
                                                     </div>
                                                 </div>
                                                 <!--row is blood group in form-->
@@ -288,14 +302,14 @@ include_once("resources/config/database.php");
                                                 <div class="form-group row">
                                                     <label for="dateofbirth" class="col-sm-2 col-form-label font-weight-bold">DOB</label>
                                                     <div class="col-sm-5">
-                                                        <input type="date" name="dateofbirth" id="dateofbirth">
+                                                        <input type="date" name="dateofbirth" id="ptdateofbirth" required>
                                                     </div>
                                                 </div>
                                                 <!--row is address in form-->
                                                 <div class="form-group row">
                                                     <label for="address" class="col-sm-2 col-form-label font-weight-bold">Address</label>
                                                     <div class="col-sm-5">
-                                                        <textarea class="form-control" id="address" name="address" rows="3"></textarea>
+                                                        <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
                                                     </div>
                                                 </div>
                                                 <!--row is buttons in form-->
@@ -321,7 +335,7 @@ include_once("resources/config/database.php");
                                     <h4 class="py-2">Book Appointment</h4>
                                     <div class="row d-flex justify-content-center">
                                         <div class="col-md-10">
-                                            <form method="POST" action="resources/api/appoitmentregi.php">
+                                            <form method="POST" action="resources/api/appoitmentregi.php" onSubmit="return apValidation();">
                                                 <!--row is patient in form-->
                                                 <div class="form-group row">
                                                     <label for="patient" class="col-sm-2 col-form-label font-weight-bold">Patient</label>
@@ -360,17 +374,17 @@ include_once("resources/config/database.php");
                                                 <div class="form-group row">
                                                     <label for="date/time" class="col-sm-2 col-form-label font-weight-bold">Date/Time</label>
                                                     <div class="col-sm-3">
-                                                        <input type="date" name="datetime1" id="date/time1">
+                                                        <input type="date" name="datetime1" id="datetime1" required>
                                                     </div>
                                                     <div class="col-sm-3">
-                                                        <input type="date" name="datetime2" id="date/time2">
+                                                        <input type="date" name="datetime2" id="datetime2" required>
                                                     </div>
                                                 </div>
                                                 <!--row is discription in form-->
                                                 <div class="form-group row">
                                                     <label for="discription" class="col-sm-2 col-form-label font-weight-bold">Discription</label>
                                                     <div class="col-sm-5">
-                                                        <textarea class="form-control" id="discription" name="discription" rows="3"></textarea>
+                                                        <textarea class="form-control" id="discription" name="discription" rows="3" required></textarea>
                                                     </div>
                                                 </div>
                                                 <!--row is buttons in form-->
@@ -468,32 +482,24 @@ include_once("resources/config/database.php");
                                                 <thead class="black white-text">
                                                     <tr>
                                                         <th scope="col">ID</th>
-                                                        <th scope="col">First Name</th>
-                                                        <th scope="col">Last Name</th>
-                                                        <th scope="col">Contact</th>
-                                                        <th scope="col">Blood Group</th>
-                                                        <th scope="col">Disease</th>
-                                                        <th scope="col">Gender</th>
-                                                        <th scope="col">Date of birth</th>
-                                                        <th scope="col">Address</th>
-
+                                                        <th scope="col">Doctor Name</th>
+                                                        <th scope="col">Patient Name</th>
+                                                        <th scope="col">From</th>
+                                                        <th scope="col">TO</th>
+                                                        <th scope="col">Discription</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    $result = mysqli_query($conn, "SELECT * FROM `patient`");
+                                                    $result = mysqli_query($conn, "SELECT `a`.`id`, `d`.`fname` AS dfname, `d`.`lname` AS dlname, `p`.`fname` AS pfname, `p`.`lname` AS plname, `a`.`fromDate`, `a`.`toDate`, `a`.`discription` FROM `appointment` AS `a` , `doctor` AS `d` , `patient` AS `p` WHERE d.id=a.doctor_id AND p.id=a.patient_id");
                                                     while ($row = mysqli_fetch_array($result)) {
                                                         echo "<tr>";
                                                         echo "<td>" . $row['id'] . "</td>";
-                                                        echo "<td>" . $row['fname'] . "</td>";
-                                                        echo "<td>" . $row['lname'] . "</td>";
-                                                        echo "<td>" . $row['contact'] . "</td>";
-                                                        echo "<td>" . $row['bloodgp'] . "</td>";
-                                                        echo "<td>" . $row['disease'] . "</td>";
-                                                        echo "<td>" . $row['gender'] . "</td>";
-                                                        echo "<td>" . $row['dob'] . "</td>";
-                                                        echo "<td>" . $row['address'] . "</td>";
-
+                                                        echo "<td>" . $row['dfname'] . " " . $row['dlname'] . "</td>";
+                                                        echo "<td>" . $row['pfname'] . " " . $row['plname'] . "</td>";
+                                                        echo "<td>" . $row['fromDate'] . "</td>";
+                                                        echo "<td>" . $row['toDate'] . "</td>";
+                                                        echo "<td>" . $row['discription'] . "</td>";
                                                         echo "</tr>";
                                                     }
                                                     ?>
