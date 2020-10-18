@@ -18,13 +18,13 @@
 }
 
 .button-hover:hover {
-    background-color: #ff1a1a;
-    color: #ffff!important;
+    background-color: #40fa02;
+    color: #40fa02!important;
 }
 
 .button-hover.active {
-    background-color: #0066cc;
-    color: #ffff!important;
+    background-color: #40fa02;
+    color: #40fa02!important;
 }
 
 
